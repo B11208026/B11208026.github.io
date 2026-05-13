@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>不只是尖叫！揭開樂園背後的「快樂密碼」</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Noto Sans TC', 'sans-serif'],
+                        display: ['Outfit', 'Noto Sans TC', 'sans-serif'],
+                    },
+                    colors: {
+                        abstract: {
+                            dark: '#0a0a0c',
+                            purple: '#6d28d9',
+                            pink: '#db2777',
+                            blue: '#3b82f6',
+                            gold: '#fbbf24',
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0a0a0c;
+            color: #e5e7eb;
+            overflow-x: hidden;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #f472b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .abstract-blob {
+            position: absolute;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.4;
+        }
+        .bg-mesh {
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+        }
+        .sticky-nav {
+            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 12, 0.8);
+        }
+        ::selection {
+            background: #db2777;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-mesh font-sans">
+
+    <!-- Floating Background Elements -->
+    <div class="abstract-blob w-96 h-96 bg-purple-600 top-0 left-[-10%] animate-pulse-slow"></div>
+    <div class="abstract-blob w-[500px] h-[500px] bg-pink-600 bottom-[-10%] right-[-10%]"></div>
+
+    <!-- Sticky Header -->
+    <nav class="sticky top-0 z-50 py-4 px-6 border-b border-white/10 sticky-nav">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="text-2xl font-display font-extrabold tracking-tighter text-white">
+                B11208026<span class="text-pink-500">.</span>
+            </div>
+            <div class="hidden md:flex space-x-8 text-sm font-medium text-gray-400">
+                <a href="#" class="hover:text-white transition-colors">HISTORY</a>
+                <a href="#" class="hover:text-white transition-colors">PSYCHOLOGY</a>
+                <a href="#" class="hover:text-white transition-colors">FUTURE</a>
+            </div>
+            <button class="px-5 py-2 bg-white text-black text-xs font-bold rounded-full hover:bg-pink-500 hover:text-white transition-all transform hover:scale-105">
+                READ MODE
+            </button>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12">
+        
+        <!-- Hero Section -->
+        <header class="mb-20 text-center">
+            <div class="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest text-pink-400 uppercase bg-pink-400/10 border border-pink-400/20 rounded-full">
+                Cultural Diagnosis
+            </div>
+            <h1 class="text-4xl md:text-7xl font-display font-extrabold mb-8 leading-tight tracking-tight">
+                不只是尖叫！揭開樂園背後的<br/>
+                <span class="text-gradient">「快樂密碼」</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">
+                從中世紀的愉悅花園到虛擬世界的奇幻旅程，一場關於心理學、歷史與科技的深度解析。
+            </p>
+        </header>
+
+        <!-- Banner Content -->
+        <section class="relative mb-24 overflow-hidden rounded-[40px] shadow-2xl group">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10"></div>
+            <div class="transform group-hover:scale-105 transition-transform duration-1000">
+                <img src='https://opal.google/board/blobs/0581bc47-3600-45cd-9579-c806e9d93ecf' alt='media_1' class="w-full h-[400px] md:h-[600px] object-cover" />
+            </div>
+            <div class="absolute bottom-8 left-8 right-8 z-20">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                    <div class="glass-card px-6 py-4 border-white/20">
+                        <span class="text-gray-400 text-xs block mb-1 uppercase tracking-widest">Featured Insight</span>
+                        <h2 class="text-xl md:text-2xl font-bold">沉浸式敘事的極致表現</h2>
+                    </div>
+                    <div class="flex -space-x-3">
+                        <div class="w-10 h-10 rounded-full border-2 border-abstract-dark bg-purple-500"></div>
+                        <div class="w-10 h-10 rounded-full border-2 border-abstract-dark bg-blue-500"></div>
+                        <div class="w-10 h-10 rounded-full border-2 border-abstract-dark bg-pink-500"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Article Content -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-32">
+            
+            <!-- Sidebar / Metadata -->
+            <aside class="lg:col-span-3">
+                <div class="sticky top-28 space-y-12">
+                    <div>
+                        <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Author Profile</h4>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center font-display font-bold text-lg">B</div>
+                            <div>
+                                <p class="text-sm font-bold">B11208026</p>
+                                <p class="text-xs text-gray-500 italic">Future Visionist</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Reading Progress</h4>
+                        <div class="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                            <div class="h-full bg-pink-500 w-1/3"></div>
+                        </div>
+                        <p class="text-[10px] text-gray-500 uppercase">Estimated 8 min read</p>
+                    </div>
+
+                    <div class="glass-card p-6 border-abstract-purple/20">
+                        <p class="text-xs leading-relaxed text-gray-400 italic">
+                            「遊樂園本質上是一個全方位的體驗懶人包。」
+                        </p>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Body Text -->
+            <article class="lg:col-span-9 space-y-16">
+                
+                <section class="prose prose-invert prose-lg max-w-none">
+                    <p class="text-xl md:text-2xl leading-relaxed text-gray-300 font-light border-l-4 border-purple-500 pl-8 mb-12 italic">
+                        如果你問我，現代文明中最成功、也最矛盾的發明是什麼？我大概會毫不猶豫地回答：遊樂園。站在那座繽紛的粉紅城堡前，左手拿著過甜的棉花糖，耳朵裡塞滿了尖叫聲與電子樂，我常在想，我們到底是為了什麼來到這裡？
+                    </p>
+                    <p class="text-gray-400 mb-8 leading-relaxed">
+                        這不僅是關於旋轉木馬的浪漫，更是一場關於心理學、歷史演算與科技邊際的深刻探討。今天，我們就以一個知識份子的視角，輕鬆地剖析這份屬於人類的「快樂診斷書」。
+                    </p>
+                </section>
+
+                <!-- Section 1 -->
+                <section class="relative">
+                    <div class="flex flex-col md:flex-row gap-8 items-start">
+                        <div class="flex-shrink-0 w-16 h-16 rounded-full bg-abstract-purple flex items-center justify-center text-3xl font-display font-black shadow-[0_0_30px_rgba(109,40,217,0.5)]">
+                            01
+                        </div>
+                        <div class="space-y-6">
+                            <h2 class="text-3xl font-bold text-white tracking-tight">一、 樂園診斷書：快樂的組成，可不只是機械結構</h2>
+                            <p class="text-gray-400 leading-relaxed">
+                                我們去樂園，真的只是為了那幾秒鐘的失重感嗎？其實不然。一份標準的「快樂診斷書」，包含了兩個核心維度：<strong class="text-pink-400">機械設施的身體震盪</strong>，以及<strong class="text-blue-400">主題景觀的靈魂催眠</strong>。
+                            </p>
+                            <div class="glass-card p-8 bg-gradient-to-br from-white/5 to-transparent">
+                                <p class="mb-4">當你坐上雲霄飛車，那種生理上的恐懼與釋放是即時的；但真正讓你流連忘返的，是那些精心設計的「故事感」。現代樂園本質上是一個全方位的「體驗懶人包」。</p>
+                                <p class="text-sm text-gray-500">為什麼樂園要分區？因為它想在有限的地理空間內，創造無限的敘事。你在「明日世界」感受科技焦慮與希望，下一秒就能在「幻想世界」體驗中世紀的純真。</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 2 - Bento Grid Style -->
+                <section class="space-y-8">
+                    <div class="flex items-start gap-8">
+                        <div class="flex-shrink-0 w-16 h-16 rounded-full bg-abstract-blue flex items-center justify-center text-3xl font-display font-black shadow-[0_0_30px_rgba(59,130,246,0.5)]">
+                            02
+                        </div>
+                        <h2 class="text-3xl font-bold text-white tracking-tight pt-2">二、 時光機啟動：你以為這是現代產物，其實老祖宗玩更瘋</h2>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="glass-card p-8 hover:bg-white/5 transition-colors border-white/5">
+                            <h4 class="text-abstract-blue font-bold mb-3 tracking-widest text-xs uppercase">16th Century</h4>
+                            <p class="text-sm text-gray-400">樂園的血脈最早可以追溯到中世紀歐洲的「定期集市」與 18 世紀的「愉悅花園」。Bakken 樂園從 1583 年活到現在，見證了聚眾取樂的原始渴望。</p>
+                        </div>
+                        <div class="glass-card p-8 bg-abstract-blue/10 border-abstract-blue/20">
+                            <h4 class="text-abstract-blue font-bold mb-3 tracking-widest text-xs uppercase">1893 Chicago Expo</h4>
+                            <p class="text-sm text-gray-400">工業革命帶來了電力，也帶來了真正的機械怪獸。1893 年首次推出「摩天輪」，那是鋼鐵與電力的炫技，奠定了現代設施的雛形。</p>
+                        </div>
+                        <div class="md:col-span-2 glass-card p-8 flex flex-col md:flex-row items-center gap-8">
+                            <div class="w-full md:w-1/3 text-4xl font-display font-black text-center text-white/10">1955</div>
+                            <div class="w-full md:w-2/3">
+                                <p class="text-gray-400 italic leading-relaxed">
+                                    直到 1955 年，加州迪士尼落成，人類才正式從單純的「路邊遊樂場」進化到「沉浸式敘事樂園」。至此，樂園不再只是機器的運轉，而是品牌 IP 與文化輸出的綜合體。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 3 - Abstract Icons -->
+                <section class="space-y-12">
+                    <div class="flex items-start gap-8">
+                        <div class="flex-shrink-0 w-16 h-16 rounded-full bg-abstract-gold flex items-center justify-center text-3xl font-display font-black shadow-[0_0_30px_rgba(251,191,36,0.5)] text-black">
+                            03
+                        </div>
+                        <h2 class="text-3xl font-bold text-white tracking-tight pt-2">三、 正能量與超能力：它為何能成為社會的剛需？</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                        <div class="p-6 border-l border-white/10 hover:border-abstract-gold transition-colors group">
+                            <div class="text-2xl font-bold text-white mb-2 group-hover:translate-x-2 transition-transform">經濟的火車頭</div>
+                            <p class="text-sm text-gray-500">不只是賣那張入園證，更牽動了周邊的航空、飯店、餐飲業。一個成功的樂園能養活數萬個家庭。</p>
+                        </div>
+                        <div class="p-6 border-l border-white/10 hover:border-abstract-gold transition-colors group">
+                            <div class="text-2xl font-bold text-white mb-2 group-hover:translate-x-2 transition-transform">合法的逃避管道</div>
+                            <p class="text-sm text-gray-500">提供了我們一個「暫停鍵」。在那裡，你可以尖叫、可以戴上愚蠢的耳朵髮箍，而不需擔心社會期待。</p>
+                        </div>
+                        <div class="p-6 border-l border-white/10 hover:border-abstract-gold transition-colors group">
+                            <div class="text-2xl font-bold text-white mb-2 group-hover:translate-x-2 transition-transform">群體記憶的錨點</div>
+                            <p class="text-sm text-gray-500">從求婚到畢業旅行，樂園承載了跨世代的情感紐帶。你是誰，你的童年就在哪裡。</p>
+                        </div>
+                        <div class="p-6 border-l border-white/10 hover:border-abstract-gold transition-colors group">
+                            <div class="text-2xl font-bold text-white mb-2 group-hover:translate-x-2 transition-transform">文化軟實力的投影</div>
+                            <p class="text-sm text-gray-500">它讓銀幕上的超級英雄與魔法成真。我們在這裡消費的，是對特定故事的一種歸屬感。</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 4 - Dark & Critical -->
+                <section class="glass-card p-12 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-8 text-6xl font-black text-white/5 select-none">CRITICAL</div>
+                    <div class="flex items-start gap-8 mb-8">
+                        <div class="flex-shrink-0 w-16 h-16 rounded-full bg-pink-600 flex items-center justify-center text-3xl font-display font-black shadow-[0_0_30px_rgba(219,39,119,0.5)]">
+                            04
+                        </div>
+                        <h2 class="text-3xl font-bold text-white tracking-tight pt-2">四、 快樂背後的悄悄話</h2>
+                    </div>
+                    
+                    <div class="space-y-8 relative z-10">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                            <div class="space-y-4">
+                                <h5 class="font-bold text-pink-400 flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-pink-400"></span> 生態的負債
+                                </h5>
+                                <p class="text-sm text-gray-400">夜晚那璀璨的燈火，背後是巨大的能源消耗、光害，以及難以估量的派對垃圾。</p>
+                            </div>
+                            <div class="space-y-4">
+                                <h5 class="font-bold text-pink-400 flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-pink-400"></span> 動物的眼淚
+                                </h5>
+                                <p class="text-sm text-gray-400">海豚的微笑是表演還是痛苦？當代動保意識抬頭，我們必須重新審視那種剝削模式。</p>
+                            </div>
+                            <div class="space-y-4">
+                                <h5 class="font-bold text-pink-400 flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-pink-400"></span> 娛樂的階級化
+                                </h5>
+                                <p class="text-sm text-gray-400">票價與快速通關。這不禁讓人思考：快樂難道逐漸變成了富人的專利？</p>
+                            </div>
+                            <div class="space-y-4">
+                                <h5 class="font-bold text-pink-400 flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-pink-400"></span> 安全的透明度
+                                </h5>
+                                <p class="text-sm text-gray-400">每一次機械疲勞都是無法挽回的悲劇。信任建立在極其嚴密的維修標準之上。</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 5 - Futurist -->
+                <section class="space-y-8">
+                    <div class="flex items-start gap-8">
+                        <div class="flex-shrink-0 w-16 h-16 rounded-full bg-cyan-500 flex items-center justify-center text-3xl font-display font-black shadow-[0_0_30px_rgba(6,182,212,0.5)]">
+                            05
+                        </div>
+                        <h2 class="text-3xl font-bold text-white tracking-tight pt-2">五、 未來的樂園：當 VR 與 AI 介入夢境</h2>
+                    </div>
+
+                    <div class="prose prose-invert prose-lg max-w-none text-gray-400">
+                        <p>未來的樂園會長什麼樣子？它可能會變得更「輕盈」，也更「個人化」。</p>
+                        <div class="bg-gradient-to-r from-cyan-900/20 to-purple-900/20 p-8 border-l-2 border-cyan-500 rounded-r-2xl my-8">
+                            隨著 <strong class="text-cyan-400">VR/AR 技術</strong> 的成熟，以後我們或許不需要真的蓋一座高聳入雲的鐵軌。**AI** 則會擔任那個最懂你的導覽員，預測你的排隊耐性。
+                        </div>
+                        <p>更重要的是，我們正看見「<strong class="text-white font-bold">永續化</strong>」的轉型。綠色能源、太陽能發電、零塑膠政策，正成為新型樂園的標配。畢竟，如果地球沒了，我們在哪裡建構天國？</p>
+                    </div>
+                </section>
+
+                <!-- Conclusion -->
+                <footer class="pt-20 border-t border-white/10">
+                    <div class="text-center space-y-8">
+                        <h3 class="text-4xl font-display font-extrabold text-gradient">結語</h3>
+                        <p class="max-w-2xl mx-auto text-gray-400 leading-relaxed text-lg">
+                            遊樂園會一直進化。它從 16 世紀的森林走入了 21 世紀的矽膠與晶片之中。但不論技術如何更迭，其核心邏輯依然是那顆渴望快樂、渴望被故事療癒的人心。
+                        </p>
+                        <div class="animate-float inline-block">
+                            <p class="text-sm font-medium text-pink-500 tracking-widest uppercase mb-4">Magic is in the heart</p>
+                            <div class="h-12 w-[1px] bg-gradient-to-b from-pink-500 to-transparent mx-auto"></div>
+                        </div>
+                        <p class="text-gray-500 text-sm max-w-lg mx-auto italic">
+                            下次，當你走進樂園，不妨暫時放下手機，感受一下腳下的綠建築，或是看看周遭那些傳承百年的快樂氣氛。在我們這短暫且忙碌的一生中，能有這麼一個地方，理直氣壯地讓我們變回小孩子，這本身就是奇蹟。
+                        </p>
+                    </div>
+                </footer>
+
+            </article>
+        </div>
+    </main>
+
+    <!-- Interactive Elements (Scroll Indicator) -->
+    <div class="fixed bottom-8 left-1/2 -translate-x-1/2 z-40">
+        <div class="flex flex-col items-center gap-2 opacity-50 hover:opacity-100 transition-opacity cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+            <span class="text-[10px] font-bold tracking-[0.3em] uppercase">Return</span>
+            <div class="w-1 h-1 bg-white rounded-full"></div>
+        </div>
+    </div>
+
+</body>
+</html>
