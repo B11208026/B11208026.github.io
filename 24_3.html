@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小Lin說｜青少趣味財經學堂 🎓</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- MathJax for LaTeX mathematical formula rendering -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #0b1329;
+            color: #f8fafc;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+        .glow-gold {
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.15);
+        }
+        .glow-gold:hover {
+            box-shadow: 0 0 25px rgba(251, 191, 36, 0.3);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col custom-scrollbar">
+
+    <!-- 頂部導航欄 -->
+    <header class="bg-slate-900/90 backdrop-blur border-b border-slate-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-amber-400 text-slate-950 p-2 rounded-xl font-black text-xl tracking-wider transform rotate-3 shadow-md">
+                    小Lin說
+                </div>
+                <span class="text-lg font-bold text-slate-100 hidden sm:inline">| 青少趣味財經學堂</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="bg-slate-800 text-amber-400 px-3 py-1 rounded-full text-xs font-semibold border border-amber-400/20">
+                    <i class="fa-solid fa-graduation-cap mr-1"></i> 學生專屬版
+                </span>
+                <button onclick="toggleConfigModal()" class="text-slate-400 hover:text-white transition-colors">
+                    <i class="fa-solid fa-gear text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主體內容 -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col gap-8">
+        
+        <!-- 歡迎區與即時搜尋 -->
+        <section class="bg-gradient-to-r from-amber-500/10 via-emerald-500/5 to-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 relative overflow-hidden shadow-2xl">
+            <div class="absolute right-0 top-0 w-96 h-96 bg-amber-400/5 rounded-full blur-3xl -z-10"></div>
+            <div class="absolute left-1/3 bottom-0 w-64 h-64 bg-emerald-400/5 rounded-full blur-3xl -z-10"></div>
+            
+            <div class="max-w-3xl">
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-100 mb-3 tracking-tight">
+                    嗨朋友們！歡迎來到 <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-200">趣味財經宇宙</span> 👋
+                </h1>
+                <p class="text-slate-400 text-sm sm:text-base mb-6 leading-relaxed">
+                    這裡是以「小Lin說」精彩財經節目為核心的專屬學習基地。咱廢話少說，用最通俗易懂的譬喻、最生動的案例，帶你一腳踏進看似高深卻無比好玩的商業世界！
+                </p>
+                
+                <!-- 實時搜尋框 -->
+                <div class="relative max-w-xl">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    <input type="text" id="searchInput" oninput="handleSearch()" placeholder="試著搜尋：多鄰國、做空、避稅天堂、NVIDIA..." class="w-full pl-11 pr-4 py-3 bg-slate-900/80 border border-slate-700 rounded-2xl text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all shadow-inner text-sm sm:text-base">
+                    <button onclick="clearSearch()" id="clearSearchBtn" class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-white hidden">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 雙欄版面：左側知識庫+FAQ / 右側AI對話 -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- 左側欄：探索庫與 FAQ (佔 7 格) -->
+            <div class="lg:col-span-7 flex flex-col gap-8">
+                
+                <!-- 資源庫模組 -->
+                <section>
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-xl font-bold text-slate-200 flex items-center gap-2">
+                            <span class="w-1 h-6 bg-amber-400 rounded-full"></span>
+                            主題探索資源庫
+                        </h2>
+                        <!-- 類別篩選器 -->
+                        <div class="flex gap-2" id="filterContainer">
+                            <!-- JS 動態插入篩選按鈕 -->
+                        </div>
+                    </div>
+
+                    <!-- 類別篩選滑動條 (行動端親和) -->
+                    <div class="flex gap-2 overflow-x-auto pb-2 mb-4 scrollbar-none sm:hidden">
+                        <button onclick="filterCategory('all')" class="category-btn-mobile px-4 py-1.5 bg-amber-400 text-slate-950 rounded-full text-xs font-bold whitespace-nowrap">全部</button>
+                        <button onclick="filterCategory('tech')" class="category-btn-mobile px-4 py-1.5 bg-slate-800 text-slate-400 rounded-full text-xs font-medium whitespace-nowrap">科技巨頭</button>
+                        <button onclick="filterCategory('global')" class="category-btn-mobile px-4 py-1.5 bg-slate-800 text-slate-400 rounded-full text-xs font-medium whitespace-nowrap">全球經濟</button>
+                        <button onclick="filterCategory('finance')" class="category-btn-mobile px-4 py-1.5 bg-slate-800 text-slate-400 rounded-full text-xs font-medium whitespace-nowrap">金融機制</button>
+                    </div>
+
+                    <!-- 篩選按鈕 (桌面端) -->
+                    <div class="hidden sm:flex flex-wrap gap-2 mb-4">
+                        <button onclick="filterCategory('all')" id="btn-all" class="category-btn px-4 py-1.5 bg-amber-400 text-slate-950 rounded-xl text-xs font-bold transition-all">全部主題</button>
+                        <button onclick="filterCategory('tech')" id="btn-tech" class="category-btn px-4 py-1.5 bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white rounded-xl text-xs font-bold transition-all">💻 科技巨頭</button>
+                        <button onclick="filterCategory('global')" id="btn-global" class="category-btn px-4 py-1.5 bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white rounded-xl text-xs font-bold transition-all">🌍 全球經濟</button>
+                        <button onclick="filterCategory('finance')" id="btn-finance" class="category-btn px-4 py-1.5 bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white rounded-xl text-xs font-bold transition-all">📈 金融機制</button>
+                    </div>
+
+                    <!-- 資源卡片網格 -->
+                    <div id="resourceGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <!-- JS 動態渲染資源卡片 -->
+                    </div>
+                    
+                    <!-- 無搜尋結果提示 -->
+                    <div id="noResults" class="hidden text-center py-12 bg-slate-900 border border-slate-800 rounded-2xl">
+                        <p class="text-slate-400 text-sm">找不到符合的財經主題耶，要不要換個關鍵字試試看？🔍</p>
+                    </div>
+                </section>
+
+                <!-- FAQ 模組 -->
+                <section class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6">
+                    <h2 class="text-xl font-bold text-slate-200 mb-4 flex items-center gap-2">
+                        <span class="w-1 h-6 bg-emerald-400 rounded-full"></span>
+                        熱門財經 FAQ 💡
+                    </h2>
+                    
+                    <div class="space-y-3" id="faqAccordion">
+                        <!-- JS 動態渲染 FAQ 面板 -->
+                    </div>
+                </section>
+
+            </div>
+
+            <!-- 右側欄：小Lin說對話視窗 (佔 5 格) -->
+            <div class="lg:col-span-5">
+                <section class="bg-slate-900 border border-slate-800 rounded-3xl h-[650px] flex flex-col overflow-hidden shadow-2xl sticky top-24">
+                    
+                    <!-- 聊天室頭部 -->
+                    <div class="bg-slate-800/80 p-4 border-b border-slate-700/60 flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="relative">
+                                <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-slate-900 rounded-full"></span>
+                                <div class="w-11 h-11 bg-gradient-to-tr from-amber-400 to-amber-200 rounded-full flex items-center justify-center text-slate-900 font-extrabold shadow-md">
+                                    Lin
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-slate-100 font-bold text-sm">小Lin AI 財經助手</h3>
+                                <p class="text-emerald-400 text-[11px] flex items-center gap-1">
+                                    <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                    24h 線上講透透
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button onclick="clearChatHistory()" class="text-slate-400 hover:text-rose-400 transition-colors p-2 rounded-lg hover:bg-slate-700/50" title="清空對話">
+                                <i class="fa-regular fa-trash-can"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 聊天快選提示晶片 -->
+                    <div class="bg-slate-900 border-b border-slate-800 p-3 flex gap-2 overflow-x-auto custom-scrollbar">
+                        <button onclick="sendQuickPrompt('跟我解釋一下雪球產品')" class="flex-shrink-0 bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white px-3 py-1.5 rounded-xl text-xs transition-all border border-slate-700/50">
+                            💸 雪球產品是什麼？
+                        </button>
+                        <button onclick="sendQuickPrompt('多鄰國是怎麼賺錢的？')" class="flex-shrink-0 bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white px-3 py-1.5 rounded-xl text-xs transition-all border border-slate-700/50">
+                            🦉 多鄰國的商業密碼
+                        </button>
+                        <button onclick="sendQuickPrompt('什麼是避稅天堂？')" class="flex-shrink-0 bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white px-3 py-1.5 rounded-xl text-xs transition-all border border-slate-700/50">
+                            🏝️ 避稅天堂資本遊戲
+                        </button>
+                    </div>
+
+                    <!-- 消息展示區 -->
+                    <div id="chatMessages" class="flex-grow p-4 overflow-y-auto space-y-4 custom-scrollbar bg-slate-950/40">
+                        <!-- 動態插入聊天內容 -->
+                        <div class="flex items-start gap-2.5">
+                            <div class="w-8 h-8 rounded-full bg-amber-400 text-slate-950 flex items-center justify-center font-bold text-xs">
+                                Lin
+                            </div>
+                            <div class="flex flex-col w-full max-w-[320px] leading-1.5 p-3.5 border-gray-200 bg-slate-800 rounded-e-xl rounded-es-xl">
+                                <p class="text-xs font-semibold text-amber-400 mb-1">小Lin說</p>
+                                <p class="text-sm font-normal text-slate-200 leading-relaxed">
+                                    嗨朋友們！我是小Lin！👋 看到你對財經知識這麼感興趣，我真的太開心了！咱廢話少說，你可以直接在下方問我任何關於「多鄰國、英偉達、避稅天堂、做空、雪球產品、新加坡經濟」的問題。我用最生動的比喻幫你徹底理清！
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 輸入區 -->
+                    <div class="p-4 bg-slate-900 border-t border-slate-800">
+                        <form id="chatForm" onsubmit="handleSendMessage(event)" class="flex items-center gap-2">
+                            <input type="text" id="chatInput" placeholder="輸入你想問小Lin的財經問題..." class="flex-grow bg-slate-800 border border-slate-700 rounded-2xl px-4 py-3 text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent text-sm" autocomplete="off">
+                            <button type="submit" class="bg-amber-400 text-slate-950 font-bold p-3 rounded-2xl hover:bg-amber-300 transition-all flex items-center justify-center">
+                                <i class="fa-solid fa-paper-plane text-base"></i>
+                            </button>
+                        </form>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+
+        <!-- 學生今日思考挑戰模組 -->
+        <section class="bg-slate-900/40 border border-slate-800 rounded-3xl p-6 shadow-xl">
+            <h2 class="text-xl font-bold text-slate-200 mb-3 flex items-center gap-2">
+                <span class="w-1 h-6 bg-amber-400 rounded-full"></span>
+                今日財經小學堂 🧠
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                <div class="text-slate-300 text-sm leading-relaxed space-y-2">
+                    <p class="font-bold text-amber-400 text-base">💰 你知道 GDP 是怎麼算出來的嗎？</p>
+                    <p>國內生產總值（$\text{GDP}$）是衡量一個國家生產力最重要的指標。在經濟學裡，我們常用「支出法」來計算：</p>
+                    <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800 my-2 text-center text-sm font-mono overflow-x-auto text-amber-300">
+                        $$GDP = C + I + G + (X - M)$$
+                    </div>
+                    <ul class="list-disc pl-5 space-y-1 text-xs text-slate-400">
+                        <li><strong>$C$ (Consumption)：</strong> 民間消費（例如你買杯珍珠奶茶）</li>
+                        <li><strong>$I$ (Investment)：</strong> 企業投資（例如英偉達買設備建廠）</li>
+                        <li><strong>$G$ (Government)：</strong> 政府支出（例如政府修捷運路網）</li>
+                        <li><strong>$X - M$ (Net Exports)：</strong> 出口減進口（淨出口額）</li>
+                    </ul>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl">
+                    <p class="font-bold text-slate-200 text-sm mb-2"><i class="fa-regular fa-lightbulb text-amber-400 mr-1"></i> 隨堂考：以下哪項會計入台灣的 GDP？</p>
+                    <div class="space-y-2 text-xs">
+                        <label onclick="checkQuiz(true)" class="flex items-center gap-3 p-2.5 bg-slate-800/50 hover:bg-slate-800 rounded-xl cursor-pointer border border-slate-700/40 transition-all">
+                            <span class="w-5 h-5 bg-slate-700 text-white rounded-full flex items-center justify-center text-[10px] font-bold">A</span>
+                            <span>你在夜市花 100 元買了一碗滷肉飯</span>
+                        </label>
+                        <label onclick="checkQuiz(false)" class="flex items-center gap-3 p-2.5 bg-slate-800/50 hover:bg-slate-800 rounded-xl cursor-pointer border border-slate-700/40 transition-all">
+                            <span class="w-5 h-5 bg-slate-700 text-white rounded-full flex items-center justify-center text-[10px] font-bold">B</span>
+                            <span>你在二手交易平台上用 2000 元買了一台二手腳踏車</span>
+                        </label>
+                        <label onclick="checkQuiz(false)" class="flex items-center gap-3 p-2.5 bg-slate-800/50 hover:bg-slate-800 rounded-xl cursor-pointer border border-slate-700/40 transition-all">
+                            <span class="w-5 h-5 bg-slate-700 text-white rounded-full flex items-center justify-center text-[10px] font-bold">C</span>
+                            <span>你花 5000 元買了台積電的零股股票</span>
+                        </label>
+                    </div>
+                    <div id="quizResult" class="mt-3 text-xs font-semibold min-h-[20px]"></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 底部資訊 -->
+    <footer class="bg-slate-950 py-8 border-t border-slate-900 mt-12 text-center text-slate-500 text-xs">
+        <p class="mb-2">版權聲明：本網站內容 100% 取自「小Lin說」自媒體影片轉錄內容，僅供學術教育與趣味財經推廣使用。</p>
+        <p>© 2026 小Lin說趣味財經學堂. Built with ❤️ for Students.</p>
+    </footer>
+
+    <!-- 設定 Modal (可更換 API Key) -->
+    <div id="configModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+        <div class="bg-slate-900 border border-slate-800 max-w-md w-full mx-4 rounded-2xl overflow-hidden shadow-2xl">
+            <div class="p-5 border-b border-slate-800 flex justify-between items-center">
+                <h3 class="text-slate-100 font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-gears text-amber-400"></i>
+                    AI 助手核心配置
+                </h3>
+                <button onclick="toggleConfigModal()" class="text-slate-400 hover:text-white transition-colors">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="p-6 space-y-4">
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    本系統預設會調用實時 Gemini 2.5 進行精彩答覆。為維護您的持久連線，您亦可在下方配置自己的 Google Gemini API 密鑰。若無密鑰，本系統將自動轉換為「超擬真本地小Lin說智能對話系統」，仍能提供高質量回答！
+                </p>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Gemini API Key</label>
+                    <input type="password" id="apiKeyInput" placeholder="輸入您的 Gemini API 密鑰 (可選)..." class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-slate-200 placeholder-slate-500 text-xs focus:outline-none focus:ring-1 focus:ring-amber-400">
+                </div>
+            </div>
+            <div class="p-4 bg-slate-950/80 border-t border-slate-800 flex justify-end space-x-2">
+                <button onclick="toggleConfigModal()" class="px-4 py-2 text-slate-400 hover:text-white text-xs font-bold transition-all">關閉</button>
+                <button onclick="saveConfig()" class="px-4 py-2 bg-amber-400 text-slate-950 rounded-xl text-xs font-bold transition-all hover:bg-amber-300">儲存配置</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 詳情 Modal -->
+    <div id="detailModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+        <div class="bg-slate-900 border border-slate-800 max-w-2xl w-full mx-4 rounded-3xl overflow-hidden shadow-2xl">
+            <div class="p-6 border-b border-slate-800 flex justify-between items-center bg-gradient-to-r from-amber-400/10 to-transparent">
+                <div class="flex items-center space-x-2">
+                    <span id="modalCategory" class="px-2 py-0.5 bg-slate-800 text-amber-400 text-[10px] font-bold rounded-md">💻 科技巨頭</span>
+                    <h3 id="modalTitle" class="text-slate-100 font-bold text-lg">主題名稱</h3>
+                </div>
+                <button onclick="toggleDetailModal()" class="text-slate-400 hover:text-white transition-colors">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto max-h-[400px] custom-scrollbar space-y-4">
+                <div>
+                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1"><i class="fa-solid fa-bolt text-amber-400 mr-1"></i> 一分鐘速讀精華</h4>
+                    <p id="modalSummary" class="text-slate-200 text-sm leading-relaxed"></p>
+                </div>
+                <div>
+                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2"><i class="fa-solid fa-key text-emerald-400 mr-1"></i> 關鍵知識點卡片</h4>
+                    <div id="modalKeywords" class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        <!-- 動態插入關鍵詞 -->
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 bg-slate-950/80 border-t border-slate-800 flex justify-between items-center">
+                <span id="modalReadTime" class="text-xs text-slate-500">閱讀時間約 3 分鐘</span>
+                <button onclick="askLinAboutModalTopic()" class="px-4 py-2 bg-emerald-500 text-slate-950 rounded-xl text-xs font-bold transition-all hover:bg-emerald-400 flex items-center gap-1">
+                    <i class="fa-solid fa-comment-dots"></i> 讓小Lin深入講講這個
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript 業務邏輯與數據庫 -->
+    <script>
+        // 初始化 API Key 
+        let apiKey = "";
+
+        // ==================== 1. 唯一知識庫數據 (小Lin說專屬) ====================
+        const resourceDatabase = [
+            {
+                id: "duolingo",
+                title: "多鄰國：全球語言學習巨頭的AI防守戰 🦉",
+                category: "tech",
+                categoryName: "💻 科技巨頭",
+                difficulty: "⭐",
+                difficultyColor: "text-emerald-400",
+                readTime: "3 分鐘",
+                shortDesc: "探討多鄰國創始人 Luis von Ahn 如何將 reCAPTCHA 驗證碼系統高價賣給 Google 實現財富自由...",
+                summary: "Luis von Ahn 出生於危地馬拉，深信教育的普及性。多鄰國（Duolingo）最大的亮點在於「遊戲化機制」（如連勝、排行榜和小綠鳥的奪命打卡）。近年在 AI 浪潮衝擊下，多鄰國並未被打倒，反而利用 GPT-4 快速推出 Duolingo Max（提供模擬角色扮演與智能錯題解釋），成功將月活用戶與市值在一年內翻了三倍，展現極強的科技抗壓性與市場敏銳度。",
+                keywords: [
+                    "<strong>reCAPTCHA</strong>：Luis發明的煩人驗證碼，高價賣給Google完成財富自由。",
+                    "<strong>遊戲化學習</strong>：多鄰國核心競爭力，把學習當遊戲打怪，建立長效護城河。",
+                    "<strong>Duolingo Max</strong>：深度整合GPT-4，創造實時口語陪練與全天候智能解釋。"
+                ]
+            },
+            {
+                id: "nvidia",
+                title: "英偉達：老黃的20年遠見與晶片霸業 👑",
+                category: "tech",
+                categoryName: "💻 科技巨頭",
+                difficulty: "⭐⭐⭐",
+                difficultyColor: "text-rose-400",
+                readTime: "4 分鐘",
+                shortDesc: "詳解黃仁勳如何將顯卡轉變為世界算力標準，並堅持將 25% 的營收投入研發...",
+                summary: "英偉達（NVIDIA）近年在 AI 大爆發中成為最大贏家，核心歸功於創始人黃仁勳。他早在 20 年前便大膽推出 CUDA 平台，將原本只負責圖形渲染的 GPU 轉型為高效率並行計算架構，奠定了深度學習的底層基石。雖然晶片行業迭代極快（如摩爾定律、黃氏定律），但老黃堅守「25% 營收投入研發」自己卷自己，成功築起難以跨越的技術生態壁壘。",
+                keywords: [
+                    "<strong>CUDA 平台</strong>：老黃最偉大的投資，將顯卡全面轉為通用並行計算怪獸。",
+                    "<strong>黃氏定律</strong>：AI晶片運算速度翻倍速度遠超摩爾定律，老黃親自書寫的技術狂飆。",
+                    "<strong>25% 研發律</strong>：英偉達超高研發投入，形成無人能及的技術疊代壁壘。"
+                ]
+            },
+            {
+                id: "anker",
+                title: "安克創新：北大師兄的充電寶百億帝國 🔋",
+                category: "tech",
+                categoryName: "💻 科技巨頭",
+                difficulty: "⭐⭐",
+                difficultyColor: "text-amber-400",
+                readTime: "3 分鐘",
+                shortDesc: "看小Lin的北大學長楊萌如何將一個看似不起眼的配件起家，打造出四百億市值的科技生態...",
+                summary: "安克創新（Anker）是消費電子出海的極致代表。創辦人楊萌是小Lin的北大學長。安克的成功祕訣在於其「產品三階段邏輯」：從最初「不可調節階段」的簡易硬體，走向「可調節階段」的多維細節改進（如人體工學、多接口充電），再到如今的「智能自主」階段。安克不僅成功占領歐美高價值市場，更透過跨境電商模式逐步建立起包含充電周邊、安防、機器人等十幾個品類的龐大科技生態圈。",
+                keywords: [
+                    "<strong>充電寶奇蹟</strong>：極不起眼的小配件起家，通過跨境電商迅速引爆歐美市場。",
+                    "<strong>產品三階段</strong>：不可調節 ➡️ 可調節 ➡️ 智能自主，引領消費品硬件升級。",
+                    "<strong>頂流直播爆紅</strong>：特朗普與馬斯克直播中露出的安克充電寶，瞬間推升市值3%。"
+                ]
+            },
+            {
+                id: "singapore",
+                title: "新加坡：小國縮哈一路贏的經濟奇蹟 🇸🇬",
+                category: "global",
+                categoryName: "🌍 全球經濟",
+                difficulty: "⭐⭐",
+                difficultyColor: "text-amber-400",
+                readTime: "4 分鐘",
+                shortDesc: "看國父李光耀如何特立獨行，吸引全球資本與精英，人均 GDP 突破 12 萬美元...",
+                summary: "新加坡在短短 60 年內，從遍地貧民窟的小島一躍成為購買力平價人均 GDP 達 12.8 萬美元的全球財富重鎮。國父李光耀走出一條「極致親商」的實用主義路線。在教育上推行高強度的學科分班篩選，在財務上建立淡馬錫（大膽股權、初創投資）與 GIC（穩健分散、不碰私募）兩大風格截然不同的主權財富基金，每年賺取的一半收益直接資助政府財政，形成完美的國家造造血閉環。",
+                keywords: [
+                    "<strong>淡馬錫控股</strong>：投資風格狂野，不碰債券、全投股權與風投，體量驚人。",
+                    "<strong>GIC 主權基金</strong>：老牌分散風險流派，股債地產1/3分配，教科書式穩健範本。",
+                    "<strong>分流教育FSBB</strong>：極致的精英主義教育體系，全面吸收全球高端人才。"
+                ]
+            },
+            {
+                id: "dubai",
+                title: "迪拜經濟：奢華表面下的「世俗化」與轉型 🏙️",
+                category: "global",
+                categoryName: "🌍 全球經濟",
+                difficulty: "⭐⭐",
+                difficultyColor: "text-amber-400",
+                readTime: "3 分鐘",
+                shortDesc: "迪拜如何巧妙推行「世俗化」，減免稅收、建立自貿區，不依賴石油也能賺大錢...",
+                summary: "迪拜是中東轉型最成功的代表。早在數十年前，迪拜酋長拉希德就預見到石油並不可持續，決定將迪拜打造成全球商業與金融中心。迪拜大膽推行「世俗化（Secularization）」，開放男女平等教育、解除禁酒令，營造極其包容的西方營商環境；更建立了著名的「傑貝阿里自由區（JAFZA）」，通過零稅率與保密自由港，成功吸引了全球海量熱錢與頂級人才。",
+                keywords: [
+                    "<strong>世俗化 Secularization</strong>：極致的法制與文化接軌，打消西方資本的顧慮。",
+                    "<strong>傑貝阿里自由區</strong>：中東第一大自貿港，提供零企業稅與完美的資本自由進出。",
+                    "<strong>去石油化轉型</strong>：當周邊石油國還在賣資源，迪拜已靠物流與金融賺取超額暴利。"
+                ]
+            },
+            {
+                id: "snowball",
+                title: "雪球產品：富人偏愛卻屢屢爆倉的金融黑洞 ❄️",
+                category: "finance",
+                categoryName: "📈 金融機制",
+                difficulty: "⭐⭐⭐",
+                difficultyColor: "text-rose-400",
+                readTime: "5 分鐘",
+                shortDesc: "詳解高淨值人群最愛的結構化產品。一探「敲入」與「敲出」機制背後博弈...",
+                summary: "雪球產品（Snowball）是一種高度複雜的結構化金融衍生品，年發行規模高達千億。富人買它，本質上是為了賺取 15% 以上的高額固定收益（票息），前提是大盤不發生極端下跌。然而，其內部設有「敲入線（Knock-in）」，一旦股票指數跌破這個邊界，富人就會失去所有利息，且必須承擔大盤下跌的全部本金損失。券商在發行時，需要進行高頻的 Delta 期貨對沖，在市場急跌時反而成為了推倒大盤的巨大幫凶。",
+                keywords: [
+                    "<strong>敲出與敲入</strong>：對賭邊界。敲出鎖定利潤，敲入則啟動噩夢、本金裸奔。",
+                    "<strong>Delta 對沖</strong>：券商為規避對賭風險，股票越跌越買、大跌時被動拋空，加劇市場崩跌。",
+                    "<strong>結構化產品</strong>：百億規模富人偏愛的零和博弈工具，背後是極其燒腦的概率學。"
+                ]
+            },
+            {
+                id: "taxhaven",
+                title: "避稅天堂：跨國巨頭的境外避稅資本遊戲 🏝️",
+                category: "finance",
+                categoryName: "📈 金融機制",
+                difficulty: "⭐⭐⭐",
+                difficultyColor: "text-rose-400",
+                readTime: "4 分鐘",
+                shortDesc: "開曼、BVI與愛爾蘭三明治，一網打盡大企業與名人的合法避稅資本套路...",
+                summary: "跨國巨頭（如蘋果、谷歌）常將海外總部設於開曼群島、BVI（維爾京群島）等零稅率地區，這被稱為「離岸金融」。大企業會透過「紅籌架構」將實體業務與境外殼公司關聯以便上市。更厲害的玩法是「雙層愛爾蘭三明治（Double Irish Sandwich）」或「馬爾他繞道（Single Malt）」，將巨額知識產權利潤轉移至稅收窪地。這是一場各國政府與頂尖稅法律師之間，合法但令人咋舌的貓鼠遊戲。",
+                keywords: [
+                    "<strong>紅籌架構</strong>：內地企業繞過上市門檻、利用開曼與BVI殼公司在納斯達克上市的套路。",
+                    "<strong>雙層愛爾蘭三明治</strong>：將利潤轉移到愛爾蘭研發中心，再倒手送至零稅率群島。",
+                    "<strong>許家印境外轉移</strong>：許老闆通過BVI控制恒大，再購買境外美元債，將股權套現轉為優先債權。"
+                ]
+            }
+        ];
+
+        const faqDatabase = [
+            {
+                question: "什麼是「做空」？它是怎麼在股價下跌中賺錢的？",
+                answer: "嗨朋友們！做空（Short Selling）用四個字總結就是「<strong>先賣後買</strong>」！<br>平常我們投資是「先便宜買，再高價賣」，做空正好相反！比如你預測『老王奶茶店』的股票會暴跌，於是你去找券商：『兄弟，借我一張老王的股票，我現在立刻在市面上按高價 100 元賣掉！』此時你手裡有 100 元現金。過幾天老王奶茶店果然爆雷，股價跌到 10 元，你趕緊花 10 元在市場上買回一張股票，還給券商。恭喜！你中間妥妥賺了 90 元差價！<br>大名鼎鼎的「渾水（Muddy Waters）」做空機構就是這樣玩，他們會實地考察（像調查東方紙業時在廠門口蹲點拍廢紙、數卡車），一旦發現財報造假，大舉發報告做空，大賺一筆！"
+            },
+            {
+                question: "美聯儲「降息」對我們的荷包有什麼直接影響？",
+                answer: "咱簡單聊聊美聯儲降息！降息就是「把借錢的利息調低」。<br>這代表銀行裡的錢不值錢了，存錢利息變少，借錢做生意變便宜。正常情況下（假設其他變量不變）：<br>1. <strong>美股會上漲</strong>：企業借錢研發便宜了，利潤預期變好。<br>2. <strong>美元會貶值</strong>：大家都把美元拿去換成高利息的外幣，美元需求變少。<br>3. <strong>黃金會暴漲</strong>：既然存美元沒利息，大家就更傾向買黃金避險。<br>4. <strong>台幣/人民幣升值</strong>：熱錢湧向亞洲等新興市場。<br>所以，這是一劑刺激經濟、給市場放水的大興奮劑！"
+            },
+            {
+                question: "對賭協議是什麼？創始人會不會被淨身出戶？",
+                answer: "對賭（Valuation Adjustment Mechanism）在資本市場上非常常見，它其實是投資方和公司管理層的一場「極速狂飆博弈」！<br>最經典的例子就是大摩投資蒙牛牛根生。投資人說：『老牛，我可以給你 2.9 億人民幣，但咱們定個目標：如果蒙牛未來三年複合增長率超過 50%，我就送你股份；但如果達不到，不好意思，你要反過來賠我這麼多股份！』<br>老牛賭贏了，蒙牛上市一飛沖天！但也有人賭輸了，比如俏江南的張蘭，對賭失敗觸發條款，最終苦心經營的品牌股權全被資方收走，真的只能無奈淨身出戶！"
+            }
+        ];
+
+        // ==================== 2. UI 渲染功能 ====================
+        
+        // 渲染資源卡片
+        function renderResources(items) {
+            const grid = document.getElementById('resourceGrid');
+            grid.innerHTML = '';
+            
+            if (items.length === 0) {
+                document.getElementById('noResults').classList.remove('hidden');
+                return;
+            }
+            document.getElementById('noResults').classList.add('hidden');
+
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "bg-slate-900 border border-slate-850 rounded-2xl p-5 hover:border-amber-400/40 transition-all cursor-pointer glow-gold flex flex-col justify-between";
+                card.onclick = () => openDetailModal(item.id);
+                
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-800 text-amber-400">
+                                ${item.categoryName}
+                            </span>
+                            <span class="text-xs text-slate-500 flex items-center gap-1">
+                                <i class="fa-regular fa-clock"></i> ${item.readTime}
+                            </span>
+                        </div>
+                        <h3 class="text-slate-200 font-bold text-sm mb-2 hover:text-amber-300 transition-colors line-clamp-2">
+                            ${item.title}
+                        </h3>
+                        <p class="text-slate-400 text-xs leading-relaxed mb-4 line-clamp-3">
+                            ${item.shortDesc}
+                        </p>
+                    </div>
+                    <div class="flex items-center justify-between pt-3 border-t border-slate-800/60 mt-2">
+                        <span class="text-[11px] text-slate-500">
+                            難易度: <span class="${item.difficultyColor} font-bold">${item.difficulty}</span>
+                        </span>
+                        <span class="text-xs text-amber-400 font-medium group flex items-center gap-1 hover:underline">
+                            開始探索 <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // 渲染 FAQ 列表
+        function renderFAQs() {
+            const accordion = document.getElementById('faqAccordion');
+            accordion.innerHTML = '';
+
+            faqDatabase.forEach((faq, index) => {
+                const item = document.createElement('div');
+                item.className = "border border-slate-800 rounded-xl overflow-hidden bg-slate-950/20 transition-all";
+                
+                item.innerHTML = `
+                    <button onclick="toggleAccordion(${index})" class="w-full text-left px-4 py-3 bg-slate-900/40 hover:bg-slate-900 flex items-center justify-between text-slate-200 text-xs sm:text-sm font-semibold transition-all">
+                        <span>${faq.question}</span>
+                        <i id="faq-icon-${index}" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform duration-300"></i>
+                    </button>
+                    <div id="faq-content-${index}" class="max-h-0 overflow-hidden transition-all duration-300 bg-slate-900/10">
+                        <div class="p-4 text-xs sm:text-sm text-slate-400 leading-relaxed border-t border-slate-850">
+                            ${faq.answer}
+                        </div>
+                    </div>
+                `;
+                accordion.appendChild(item);
+            });
+        }
+
+        // 折疊面板開關
+        function toggleAccordion(index) {
+            const content = document.getElementById(`faq-content-${index}`);
+            const icon = document.getElementById(`faq-icon-${index}`);
+            
+            // 關閉其他
+            faqDatabase.forEach((_, i) => {
+                if (i !== index) {
+                    document.getElementById(`faq-content-${i}`).style.maxHeight = null;
+                    document.getElementById(`faq-icon-${i}`).classList.remove('rotate-180');
+                }
+            });
+
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                icon.classList.remove('rotate-180');
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+                icon.classList.add('rotate-180');
+            }
+        }
+
+        // 分類過濾
+        let currentCategory = 'all';
+        function filterCategory(cat) {
+            currentCategory = cat;
+            
+            // 更新篩選按鈕樣式
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.className = "category-btn px-4 py-1.5 bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white rounded-xl text-xs font-bold transition-all";
+            });
+            const activeBtn = document.getElementById(`btn-${cat}`);
+            if (activeBtn) {
+                activeBtn.className = "category-btn px-4 py-1.5 bg-amber-400 text-slate-950 rounded-xl text-xs font-bold transition-all";
+            }
+
+            handleSearch();
+        }
+
+        // 即時搜尋過濾
+        function handleSearch() {
+            const query = document.getElementById('searchInput').value.trim().toLowerCase();
+            const clearBtn = document.getElementById('clearSearchBtn');
+            
+            if (query.length > 0) {
+                clearBtn.classList.remove('hidden');
+            } else {
+                clearBtn.classList.add('hidden');
+            }
+
+            let filtered = resourceDatabase;
+
+            // 分類過濾
+            if (currentCategory !== 'all') {
+                filtered = filtered.filter(item => item.category === currentCategory);
+            }
+
+            // 搜尋過濾
+            if (query.length > 0) {
+                filtered = filtered.filter(item => 
+                    item.title.toLowerCase().includes(query) || 
+                    item.shortDesc.toLowerCase().includes(query) ||
+                    item.summary.toLowerCase().includes(query)
+                );
+            }
+
+            renderResources(filtered);
+        }
+
+        // 清空搜尋
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            handleSearch();
+        }
+
+        // ==================== 3. Modal 模組控制 ====================
+        
+        let activeDetailId = null;
+
+        function openDetailModal(id) {
+            const item = resourceDatabase.find(r => r.id === id);
+            if (!item) return;
+
+            activeDetailId = id;
+            document.getElementById('modalTitle').innerText = item.title;
+            document.getElementById('modalCategory').innerText = item.categoryName;
+            document.getElementById('modalSummary').innerText = item.summary;
+            document.getElementById('modalReadTime').innerText = `閱讀時間約 ${item.readTime}`;
+
+            const keywordsContainer = document.getElementById('modalKeywords');
+            keywordsContainer.innerHTML = '';
+            item.keywords.forEach(kw => {
+                const li = document.createElement('div');
+                li.className = "bg-slate-950/40 p-3 rounded-xl border border-slate-850 text-slate-300 leading-relaxed";
+                li.innerHTML = kw;
+                keywordsContainer.appendChild(li);
+            });
+
+            document.getElementById('detailModal').classList.remove('hidden');
+        }
+
+        function toggleDetailModal() {
+            document.getElementById('detailModal').classList.add('hidden');
+        }
+
+        // 連接 Modal 至 AI 對話
+        function askLinAboutModalTopic() {
+            const item = resourceDatabase.find(r => r.id === activeDetailId);
+            if (!item) return;
+            
+            toggleDetailModal();
+            
+            // 跳轉到對話
+            sendQuickPrompt(`幫我深入講一下「${item.title}」背後的故事！`);
+        }
+
+        function toggleConfigModal() {
+            const modal = document.getElementById('configModal');
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                document.getElementById('apiKeyInput').value = apiKey;
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
+
+        function saveConfig() {
+            apiKey = document.getElementById('apiKeyInput').value.trim();
+            toggleConfigModal();
+            appendBotMessage("Lin", "配置更新成功！我已經做好隨時為你解惑的準備了。咱廢話少說，開始吧！🚀");
+        }
+
+        // 學生隨堂挑戰考驗
+        function checkQuiz(isCorrect) {
+            const resultDiv = document.getElementById('quizResult');
+            if (isCorrect) {
+                resultDiv.innerHTML = `<span class="text-emerald-400"><i class="fa-solid fa-circle-check"></i> 答對了！</span> 滷肉飯是台灣本地生產並消費的新商品，100% 計入 GDP。二手車和股票只是「產權轉移」，不計入新生產。`;
+            } else {
+                resultDiv.innerHTML = `<span class="text-rose-400"><i class="fa-solid fa-circle-xmark"></i> 答錯囉！</span> 仔細想想，二手交易只是產權交換，而買股票只是股權投資，都沒有產生新的「生產活動」，不計入 GDP 哦！再試一次！`;
+            }
+        }
+
+        // ==================== 4. AI 對話系統與 Gemini API 串接 ====================
+        
+        // 系統提示詞：將上傳檔案內容作為唯一知識庫，模擬小Lin招牌風格
+        const systemPrompt = `
+你現在扮演著名財經自媒體「小Lin說」。你正在與一位「學生族群」用戶對話。
+你的語風必須極其具有標誌性：
+- 充滿活力、邏輯清晰、幽默好笑。
+- 標誌性口頭禪必須靈活運用，如：「嗨朋友們！」、「咱廢話少說！」、「這步很簡單我們跳過！」、「這事兒可不一般！」、「傻笑/笑」、「跌宕起伏」、「吃不消」、「這就尷尬了」。
+- 使用活潑好玩的比喻（如用「奶茶店」、「搶辣條」、「全班對賭」等概念解釋複雜金融問題）。
+- 用最接地氣的中文（繁體中文），解釋任何問題。
+
+你唯一且絕對的知識庫如下（不要編造超出以下範疇的事實）：
+1. 【多鄰國】：創始人 Luis von Ahn 是CMU計算機教授，發明 reCAPTCHA 驗證碼賣給 Google 財富自由。他熱愛公平教育。多鄰國靠遊戲化機制（連勝、排行榜、每日小綠鳥奪命打卡）建立極強用戶粘性，無懼 AI 衝擊，反用 GPT-4 推出 Duolingo Max（口語對話與智能錯題解釋），市值翻三倍。
+2. 【英偉達】：黃仁勳（老黃）20年前布局 CUDA 平台，將 GPU 轉化為並行算力，成為如今 AI 算力黃金標準。芯片護城河是「持續奔跑迭代的研發能力（自己卷自己）」，常年投入 25% 營收用於研發。
+3. 【安克創新】：楊萌（小Lin北大學長）靠不起眼的充電周邊、充電寶起家。產品邏輯經歷：不可調節（椅子原始狀態）➡️ 可調節（人體工學椅）➡️ 智能自主（自主工作）。跨境電商出海奇蹟，市值四百億。
+4. 【新加坡】：Lee Kuan Yew 縮哈一路贏。主權基金 Temasek（風格狂野，全股權與高比例私募/初創投資），GIC（穩健分散，股債地產各1/3教科書打法）。每年主權回報的一半直接分紅給政府財政。FSBB（學科分班教育體制）極致吸收人才。
+5. 【避稅天堂】：開曼、BVI等零稅率地區的紅籌架構。大企業在此註冊境外殼公司進行境外上市。許家印通過層層BVI殼公司轉移資產，並以「債權人」身份購買境外美元債，完成在恒大下沉前的資產保全。
+6. 【做空】：先賣後買。借股票高價賣掉，等暴跌再買回還券。渾水（Muddy Waters）做空東方紙業、瑞幸等，實地調研拍廢紙壳、蹲點數卡車，揭發財報造假。
+7. 【雪球產品】：結構化衍生品。設有敲出線和敲入線。股票大跌時一旦「敲入」，富人便面臨無利息、裸奔承擔大盤本金虧損。券商在其中的 Delta 動態對沖（大跌被動賣空）常成為推跌股市的幫凶。
+8. 【對賭】：投資方與管理層的賭局。大摩與蒙牛牛根生約定，若三年複合增長率大於50%送股，若低於則賠股份。是興奮劑也是雙刃劍。
+9. 【樂高】：專利到期和九十年代電子遊戲浪潮衝擊。轉型重心重回王牌「點點積木」，並打造電影、真人秀、動畫 IP 矩陣打法，完美收復失地。
+10. 【杜拜】：酋長拉希德具遠見。不依賴石油建立自貿區（傑貝阿里自貿區），推動徹底的文化「世俗化」，開放女性、解除禁酒、保密自由港，吸納全球資本。
+
+請只基於上述內容回答，如果用戶提問超出此範圍（例如問你無關的明星八卦或不在此知識庫內的複雜物理理論），你要幽默地用小Lin的口吻擋回去：「嗨朋友們！這事兒超出了咱這期視頻的範疇啦！咱廢話少說，今天先專注把多鄰國、英偉達或者做空這些好玩的商戰故事搞明白，趕緊挑一個問我吧！」
+`;
+
+        // 輔助：指數退避重試函數
+        async function fetchWithRetry(url, options, retries = 5, delay = 1000) {
+            try {
+                const response = await fetch(url, options);
+                if (!response.ok) {
+                    throw new Error(`HTTP Error Status: ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                if (retries > 0) {
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    return fetchWithRetry(url, options, retries - 1, delay * 2);
+                }
+                throw error;
+            }
+        }
+
+        // 呼叫實時 Gemini 2.5 API
+        async function callGeminiAPI(promptText) {
+            if (!apiKey) {
+                throw new Error("No API Key configured. Please configure it or use fallback.");
+            }
+
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            const payload = {
+                contents: [{
+                    parts: [{ text: promptText }]
+                }],
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                }
+            };
+
+            const responseData = await fetchWithRetry(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const text = responseData.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (!text) {
+                throw new Error("Empty response from Gemini.");
+            }
+            return text;
+        }
+
+        // 超擬真本地小Lin回覆系統 (Fallback 引擎)
+        function getSimulatedLinResponse(message) {
+            const msg = message.toLowerCase();
+            
+            if (msg.includes("雪球") || msg.includes("結構化") || msg.includes("爆倉")) {
+                return `嗨朋友們！雪球產品這東西最近可太火了，但也把不少高淨值富豪坑得慘兮兮的！(笑)<br><br>
+咱廢話少說，你可以把它想像成一個『<strong>安全邊界對賭遊戲</strong>』。富人買它，是圖它那高達 15%~20% 的固定高利息。
+只要股市大盤指数在約定期間內「不跌破」一個底線（也就是『敲入線』，通常是大盤指數跌20%~30%），富人就能穩拿高息，皆大歡喜！<br><br>
+<strong>但是！BUT！這事兒可沒那麼簡單！</strong><br>
+萬一遇到股市像雪崩一樣猛跌，穿透了那條敲入線，遊戲規則瞬間就變了！富人不僅徹底失去利息，還要百分百裸奔承擔大盤下跌的所有本金虧損！這就尷尬了，直接爆倉血本無歸！<br><br>
+更要命的是，發行這產品的券商，為了對沖風險，會在市場大跌時被迫跟著瘋狂賣空期貨，結果反而成了推跌大盤的巨大幫凶。所以啊，金融市場裡永遠是高風險伴隨高回報，咱普通學生聽聽精彩故事，千萬別隨便去碰雪球哦！❄️`;
+            }
+            
+            if (msg.includes("避稅天堂") || msg.includes("恒大") || msg.includes("開曼") || msg.includes("bvi") || msg.includes("許家印")) {
+                return `嗨朋友們！今天咱來扒一扒避稅天堂背後的資本大博弈，這跌宕起伏的過程簡直堪比好萊塢大片！(笑)<br><br>
+你可能常聽說，像阿里巴巴、恒大這些巨頭，竟然都註冊在開曼群島或者英屬維爾京群島（BVI）！為什麼呢？因為這些加勒比海的小島是『零稅率』！而且保密性好到你連股東是誰都查不到。<br><br>
+這裡面最經典的就是「紅籌架構」资本遊戲：在大陸開奶茶店，卻在境外註冊個空殼公司，倒一手然後跑去納斯達克或港交所上市。<br><br>
+<strong>最匪夷所思的是許老版恒大的神級避稅轉移操作：</strong><br>
+許家印在恒大巨輪下沉前，先利用層層BVI殼公司控股恒大，大舉分紅套現。然後！他再和朋友們用這些分紅，去購買恒大在境外發行的「高息美元債」（利息高達10%以上）。<br>
+你以為他是支持公司？不！他這是把「股權」巧妙轉換成了「債權」！公司一旦破產清算，股票變廢紙，但債權人卻能優先分資產，直接跑到食物鏈頂端。這場全球大博弈，真是一般人想都想不到的貓鼠遊戲！🏝️`;
+            }
+
+            if (msg.includes("英偉達") || msg.includes("nvidia") || msg.includes("黃仁勳") || msg.includes("老黃")) {
+                return `嗨朋友們！英偉達這幾年簡直是瘋狂狂飆，黃仁勳（老黃）更是成了無可置疑的 AI 算力教父！憑什麼是他呢？(笑)<br><br>
+咱廢話少說！老黃最偉大的地方就在於 **20 年前超乎常人的遠見**。當時顯卡只是個賣給網吧、打遊戲的配件。但老黃大膽投資了並行計算平台『CUDA』，硬生生把只能畫遊戲畫面的 GPU，改造成了能進行瘋狂數學運算的超級怪獸。<br><br>
+你說，芯片行業有摩爾定律，你今天推個厲害芯片，兩年後就被對手追上了啊，英偉達是怎麼維持壟斷的？<br>
+老黃的護城河不是某個技術，而是**「持續奔跑迭代的研發能力」**！英偉達每年會把高達 **25% 左右的營收**直接砸進研發（其他互聯網巨頭也就10%），自己卷自己！這就是黃氏定律，老黃穿著他的千年皮衣，跑得比所有人都快，對手自然只能乾瞪眼！👑`;
+            }
+
+            if (msg.includes("多鄰國") || msg.includes("duolingo")) {
+                return `嗨朋友們！多鄰國（Duolingo）簡直是教育界的傳奇！它的創始人 Luis von Ahn 真的很不一樣。(笑)<br><br>
+這哥們是卡內基梅隆大學的計算機天才，當年發明了那個讓我們天天點紅綠燈、找人行道的驗證碼系統（reCAPTCHA），然後高價賣給 Google 實現財富自由。他覺得富人花錢買好教育，窮人卻因為學不會英文無法翻身，於是決定做一個免費、遊戲化的語言 App。<br><br>
+<strong>多鄰國最強大的護城河，不是什麼高端 AI，而是「極致的遊戲化黏性」！</strong><br>
+學語言最難的就是堅持。多鄰國設計了多日連勝（Streak）、好友排行榜、還有那隻每天奪命連環打卡打擾你的小綠鳥，讓你像玩消除遊戲一樣忍不住天天打開！<br><br>
+最近 AI 爆發，大家以為多鄰國死定了。沒想到他們極速轉身，深度合作 GPT-4 推出『Duolingo Max』，提供實時情境口語對話與一鍵智能錯題解釋。結果月活用戶狂飆，市值在一年內翻了三倍，把華爾街這幫資本大佬都看傻了！🦉`;
+            }
+
+            if (msg.includes("安克") || msg.includes("anker") || msg.includes("楊萌")) {
+                return `哈囉！說到安克創新（Anker），他居然是我北大的大師兄創辦的！百億身家，低調得不行！(笑)<br><br>
+安克的故事最神奇的地方在於，他不是做手機、做汽車這種昂貴的大件，而是靠充電寶、充電線、插頭這種不起眼的小件起家，硬生生做成了市值四百億的科技小巨頭！<br><br>
+<strong>大師兄成功的祕訣，我把它總結為「消費硬件的三階段進化邏輯」：</strong><br>
+1. **不可調節階段**：比如一張最原始的塑料椅子，完全不能動。安克最早期就是做這種基礎高質量的充電配件。<br>
+2. **可調節階段**：比如人體工學椅，這也能調那也能調，細節控！安克開始不斷優化克重、多接口分流、自動配電。<br>
+3. **智能自主階段**：椅子能自己移動、根據你的坐姿自動適配。如今安克全面進軍 IOT（智能家居、機器人、eufy安防），這條演進路線非常困難，但安克真的走通了，絕對是國貨出海的超級典範！🔋`;
+            }
+
+            if (msg.includes("新加坡")) {
+                return `嗨朋友們！新加坡這國家的經濟打法，真的特別「叛逆」、特別不按套路出牌！(笑)<br><br>
+在短短 60 年前，這裡還是個遍地貧民窟、失業率爆表、三天兩頭鬧罷工的落後海島。國父李光耀簡直像打遊戲一樣，一路過關斬將。他走了一條「極致親商」的實用主義路線，打造低稅率環境，吸引全地球最頂級的跨國巨頭過來建總部。<br><br>
+<strong>新加坡政府的財政背後，藏著兩個風格迥異的主權財富基金雪球：</strong><br>
+- **淡馬錫（Temasek）**：投資風格超級狂野、飄逸！不買債券，全投股權，甚至有一半投在風險極高、回報驚人的「私募」和初創企業上。<br>
+- **GIC（新加坡政府投資公司）**：風格穩健到不行，主打分散 risk。股、債、房地產各佔 1/3，主打不求有功但求無過。<br><br>
+這兩大基金每年投資回報的「一半」，會作為分紅直接資助給新加坡政府財政，佔了政府財政收入的 1/5！這種國家級的強大造血機制，撐起了這顆人均 GDP 高達 12.8 萬美元的亞洲最閃亮明珠！🇸🇬`;
+            }
+
+            // 默認趣味回覆
+            return `嗨朋友們！我是小Lin！👋 看到你對財經問題這麼熱情，我真的太高興了！<br><br>
+咱廢話少說！你剛才提的問題很有意思，但你可以試著向我提問這些**「小Lin說精彩主題」**：<br>
+1. <strong>多鄰國</strong>：免費語言App是如何利用小綠鳥黏性和 GPT-4 幹翻華爾街的？🦉<br>
+2. <strong>避稅天堂與恒大</strong>：許老闆是怎麼用層層殼公司與境外美元債轉移資產的？🏝️<br>
+3. <strong>做空機制與渾水</strong>：如何「先賣後買」，靠在廠門口數卡車、拍廢紙壳賺大錢？🔍<br>
+4. <strong>英偉達</strong>：黃仁勳憑什麼能靠 CUDA 平台與 25% 研發自卷，壟斷算力帝國？👑<br>
+5. <strong>雪球金融產品</strong>：為什麼這個號稱穩賺的高息產品會讓富豪接連爆倉？❄️<br>
+6. <strong>新加坡經濟</strong>：淡馬錫與GIC兩大基金是如何幫國家完美造血的？🇸🇬<br><br>
+你今天最想聽我拆解哪一個精彩跌宕起伏的商業祕密呢？快在下方輸入吧！`;
+        }
+
+        // 發送消息
+        async function handleSendMessage(event) {
+            if (event) event.preventDefault();
+            
+            const chatInput = document.getElementById('chatInput');
+            const messageText = chatInput.value.trim();
+            if (!messageText) return;
+
+            // 渲染用戶消息
+            appendUserMessage(messageText);
+            chatInput.value = '';
+
+            // 渲染載入中/思考中
+            const typingId = appendTypingIndicator();
+
+            try {
+                let botReply = "";
+                if (apiKey) {
+                    // 如果用戶配置了 API Key，調用實時 Gemini 2.5
+                    botReply = await callGeminiAPI(messageText);
+                } else {
+                    // 沒有配置 Key，採用本地極精準 小Lin 模擬器
+                    await new Promise(resolve => setTimeout(resolve, 800)); // 模擬擬真延遲
+                    botReply = getSimulatedLinResponse(messageText);
+                }
+                
+                removeTypingIndicator(typingId);
+                appendBotMessage("Lin", botReply);
+            } catch (error) {
+                removeTypingIndicator(typingId);
+                // 發生錯誤（如 API 限制、網路），自動 fallback 到本地超擬真數據，並溫馨提醒
+                const fallbackReply = getSimulatedLinResponse(messageText);
+                appendBotMessage("Lin", `${fallbackReply}<br><br><span class="text-[10px] text-slate-500 block border-t border-slate-800/60 pt-2"><i class="fa-solid fa-circle-info"></i> 已自動切換至「小Lin說本地智能對話庫」回答。如欲啟用實時雲端 AI，可點選右上角設定配置 API 密鑰。</span>`);
+            }
+        }
+
+        // 快選問題觸發
+        function sendQuickPrompt(promptText) {
+            document.getElementById('chatInput').value = promptText;
+            handleSendMessage();
+        }
+
+        // 渲染對話 DOM 元素
+        function appendUserMessage(text) {
+            const container = document.getElementById('chatMessages');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = "flex items-start gap-2.5 justify-end";
+            msgDiv.innerHTML = `
+                <div class="flex flex-col w-full max-w-[320px] leading-1.5 p-3.5 border-gray-200 bg-amber-400 text-slate-950 rounded-s-xl rounded-b-xl">
+                    <p class="text-xs font-semibold text-slate-900 mb-1">你（熱情的學生）</p>
+                    <p class="text-sm font-normal leading-relaxed">${text}</p>
+                </div>
+                <div class="w-8 h-8 rounded-full bg-slate-700 text-slate-200 flex items-center justify-center font-bold text-xs">
+                    Me
+                </div>
+            `;
+            container.appendChild(msgDiv);
+            scrollToBottom();
+        }
+
+        function appendBotMessage(sender, htmlText) {
+            const container = document.getElementById('chatMessages');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = "flex items-start gap-2.5";
+            
+            // 使用 marked 渲染 markdown (如果可用且非本地預設HTML)
+            let formattedText = htmlText;
+            if (apiKey && typeof marked !== 'undefined') {
+                formattedText = marked.parse(htmlText);
+            }
+
+            msgDiv.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-amber-400 text-slate-950 flex items-center justify-center font-bold text-xs">
+                    Lin
+                </div>
+                <div class="flex flex-col w-full max-w-[320px] leading-1.5 p-3.5 border-gray-200 bg-slate-800 rounded-e-xl rounded-es-xl">
+                    <p class="text-xs font-semibold text-amber-400 mb-1">小Lin說</p>
+                    <div class="text-sm font-normal text-slate-200 leading-relaxed space-y-2 prose prose-invert max-w-none">
+                        ${formattedText}
+                    </div>
+                </div>
+            `;
+            container.appendChild(msgDiv);
+            scrollToBottom();
+            
+            // 觸發 MathJax 再次解析新渲染的 LateX
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typesetPromise();
+            }
+        }
+
+        function appendTypingIndicator() {
+            const container = document.getElementById('chatMessages');
+            const id = "typing-" + Date.now();
+            const msgDiv = document.createElement('div');
+            msgDiv.id = id;
+            msgDiv.className = "flex items-start gap-2.5 animate-pulse";
+            msgDiv.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-amber-400 text-slate-950 flex items-center justify-center font-bold text-xs">
+                    Lin
+                </div>
+                <div class="flex flex-col w-full max-w-[120px] leading-1.5 p-3.5 border-gray-200 bg-slate-850 rounded-e-xl rounded-es-xl">
+                    <div class="flex space-x-1.5 items-center justify-center py-1">
+                        <div class="w-2 h-2 bg-amber-400 rounded-full animate-bounce"></div>
+                        <div class="w-2 h-2 bg-amber-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                        <div class="w-2 h-2 bg-amber-400 rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
+                    </div>
+                </div>
+            `;
+            container.appendChild(msgDiv);
+            scrollToBottom();
+            return id;
+        }
+
+        function removeTypingIndicator(id) {
+            const el = document.getElementById(id);
+            if (el) el.remove();
+        }
+
+        function scrollToBottom() {
+            const container = document.getElementById('chatMessages');
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function clearChatHistory() {
+            const container = document.getElementById('chatMessages');
+            container.innerHTML = `
+                <div class="flex items-start gap-2.5">
+                    <div class="w-8 h-8 rounded-full bg-amber-400 text-slate-950 flex items-center justify-center font-bold text-xs">
+                        Lin
+                    </div>
+                    <div class="flex flex-col w-full max-w-[320px] leading-1.5 p-3.5 border-gray-200 bg-slate-800 rounded-e-xl rounded-es-xl">
+                        <p class="text-xs font-semibold text-amber-400 mb-1">小Lin說</p>
+                        <p class="text-sm font-normal text-slate-200 leading-relaxed">
+                            對話已清空！咱廢話少說，隨時輸入你好奇的財經概念，我會用奶茶店或全班對賭的比喻秒速幫你理清楚！☕
+                        </p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ==================== 5. 初始裝載運行 ====================
+        window.onload = function() {
+            // 渲染資源卡片與FAQ
+            renderResources(resourceDatabase);
+            renderFAQs();
+            
+            // 初始化 MathJax
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typesetPromise();
+            }
+        };
+    </script>
+</body>
+</html>
